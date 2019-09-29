@@ -13,7 +13,7 @@ import OnlineAnswer from '@/components/Teachers/OnlineAnswer.vue'       // 引�
 
 // -----------------------------------------------------------------------------------------------------------------------
 import Shome from '@/components/Students/Home.vue'    // 引入学生端主页面
-import SearchMain from "@/components/Students/SearchMain.vue"     // 引入学生端在线提问页面
+import OnlineAsk from "@/components/Students/OnlineAsk.vue"     // 引入学生端在线提问页面
 import Profession from "@/components/Students/Profession.vue"     // 引入学生端我的专业页面
 import StuStatisticsOverview from "@/components/Students/StuStatisticsOverview.vue" // 引入学生端我的成长页面
 import StuEvaluate from "@/components/Students/StuEvaluate.vue"   // 引入学生端我的参与页面
@@ -71,9 +71,9 @@ const routes = [
     component: Shome,
     children: [
       {
-        path: "SearchMain",   // 学生端在线提问路由
-        component: SearchMain, 
-        name:"SearchMain"
+        path: "OnlineAsk",   // 学生端在线提问路由
+        component: OnlineAsk, 
+        name:"OnlineAsk"
       },
       {
         path:"Profession",   // 学生端我的专业路由
