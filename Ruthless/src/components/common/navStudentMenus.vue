@@ -31,7 +31,7 @@
           <ul class="loginUser">
             <li>
               <span style="cursor: pointer; color: #A3A3A4; font-size: 14px;">颜爽</span>
-              <span class="ask_title" @click="toSearchMain">在线提问</span>
+              <span class="ask_title" @click="toOnlineAsk">在线提问</span>
               <span style="cursor: pointer; color: #A3A3A4; font-size: 14px; margin-left: 15px;">退出</span>
             </li>
           </ul>
@@ -63,7 +63,7 @@ export default {
       }
     },
     toSearchMain: function() {
-      this.$router.push("/student/SearchMain");
+      this.$router.push("/student/OnlineAsk");
     }
   }
 };
