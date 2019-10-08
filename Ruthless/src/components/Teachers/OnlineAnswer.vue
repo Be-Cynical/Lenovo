@@ -19,13 +19,6 @@
             <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
               <el-tab-pane label="已回复提问" name="first">
                 <template>
-<<<<<<< HEAD
-                  <el-table :data="tableData" style="width: 100%">
-                    <el-table-column prop="date" label="日期" width="180"></el-table-column>
-                    <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-                    <el-table-column prop="address" label="地址"></el-table-column>
-                    <el-table-column prop="caozuo" label="详情"></el-table-column>
-=======
                   <el-table :data="tableData">
                     <el-table-column prop="problem" label="问题" width="600">
                       <div v-for="(item,index) in arr" :key="index">
@@ -50,7 +43,6 @@
                         </span>
                       </div>
                     </el-table-column>
->>>>>>> Ruthless
                   </el-table>
                 </template>
               </el-tab-pane>
