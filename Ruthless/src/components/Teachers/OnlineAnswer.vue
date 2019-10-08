@@ -48,13 +48,6 @@
               </el-tab-pane>
               <el-tab-pane label="未回复提问" name="second">
                 <template>
-<<<<<<< HEAD
-                  <el-table :data="tableData" style="width: 100%">
-                    <el-table-column prop="date" label="日期" width="180"></el-table-column>
-                    <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-                    <el-table-column prop="address" label="地址"></el-table-column>
-                    <el-table-column prop="caozuo" label="详情"></el-table-column>
-=======
                   <el-table :data="tableData" style="line-height: 39px;">
                     <el-table-column prop="problem" label="问题" width="600">
                       <div v-for="(item,index) in arr" :key="index">
@@ -81,13 +74,10 @@
                         </span>
                       </div>
                     </el-table-column>
->>>>>>> Ruthless
                   </el-table>
                 </template>
               </el-tab-pane>
             </el-tabs>
-<<<<<<< HEAD
-=======
             <el-dialog
               :visible.sync="dialogVisible"
               width="50%"
@@ -112,23 +102,11 @@
                 </el-button>
               </span>
             </el-dialog>
->>>>>>> Ruthless
           </template>
 
           <el-divider></el-divider>
 
           <p class="mb-p">意见反馈</p>
-<<<<<<< HEAD
-
-          <template>
-            <el-table :data="tableData" style="width: 100%">
-              <el-table-column prop="date" label="意见" width="180"></el-table-column>
-              <el-table-column prop="name" label="意见类型" width="180"></el-table-column>
-              <el-table-column prop="address" label="发起时间"></el-table-column>
-              <el-table-column prop="caozuo" label="操作"></el-table-column>
-            </el-table>
-          </template>
-=======
           <el-table :data="tableData" style="width: 100%">
             <el-table-column prop="problem" label="意见" width="180">
               <div v-for="(item,index) in opinion" :key="index">
@@ -180,7 +158,6 @@
               </el-button>
             </span>
           </el-dialog>
->>>>>>> Ruthless
         </div>
       </el-col>
     </el-row>
@@ -192,15 +169,6 @@ export default {
   name: "OnlineAnswer",
   data: function() {
     return {
-<<<<<<< HEAD
-      activeName: "first",
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-          caozuo: "详情"
-=======
       dialogVisible: false,
       dialogVisibles: false,
       activeName: "first",
@@ -210,19 +178,10 @@ export default {
           time: "",
           state: "",
           handle: ""
->>>>>>> Ruthless
         }
       ],
       page: 1,
       pageSize: 3,
-<<<<<<< HEAD
-      arr: []
-    };
-  },
-  methods: {
-    handleClick(tab, event) {
-      // console.log(tab, event);
-=======
       arr: [],
       recovered: {},
       textarea: "",
@@ -292,7 +251,6 @@ export default {
             console.log("提交成功");
           }
         });
->>>>>>> Ruthless
     }
   },
   created() {
@@ -304,11 +262,6 @@ export default {
         pageSize: this.pageSize
       })
       .then(function(res) {
-<<<<<<< HEAD
-        console.log(res);
-        app.arr = res.data.data;
-      });
-=======
         // console.log(res.data.data);
         app.arr = res.data.data;
       });
@@ -322,18 +275,14 @@ export default {
         app.opinion = res.data.data;
         // console.log(app.opinion);
       });
->>>>>>> Ruthless
   }
 };
 </script>
 
 <style>
-<<<<<<< HEAD
-=======
 .el-table .cell {
   line-height: 39px;
 }
->>>>>>> Ruthless
 /* 标题部分 */
 .header {
   min-height: 144px;
