@@ -62,7 +62,7 @@ export default {
         this.$router.push("/Student/examinationMain"); //跳转到学生端我的考试页面
       }
     },
-    toSearchMain: function() {
+    toOnlineAsk: function() {
       this.$router.push("/student/OnlineAsk");
     }
   }
@@ -70,14 +70,6 @@ export default {
 </script>
 
 <style>
-a {
-  color: #6c6868;
-  font-size: 12px;
-}
-.el-row:last-child {
-  margin-bottom: 0;
-}
-
 .el-col {
   border-radius: 4px;
   padding-left: 0 !important;
@@ -119,7 +111,8 @@ a {
   background: #49c0e0;
   font-size: 14px;
   color: white;
-  padding: 15px 5px;
+  padding: 15px 20px;
+  margin-left: 15px;
 }
 .ask_title:hover {
   cursor: pointer;

@@ -45,19 +45,19 @@ a {
 .el-header {
   width: 1100px;
   margin: auto;
-  line-height: 45px;
+  line-height: 46px;
   height: 46px !important;
   padding-left: 10px !important;
 }
 
 #thome ul.el-menu-demo > li {
-  height: 45px !important;
-  line-height: 45px !important;
+  height: 46px !important;
+  line-height: 46px !important;
 }
 
 .el-menu--horizontal > .el-submenu .el-submenu__title {
-  height: 45px !important;
-  line-height: 45px !important;
+  height: 46px !important;
+  line-height: 46px !important;
 }
 
 .el-aside {
@@ -86,5 +86,9 @@ body > .el-container {
 
 .el-container:nth-child(7) .el-aside {
   line-height: 320px;
+}
+
+.el-menu.el-menu--horizontal {
+    border-bottom: 0;
 }
 </style>
