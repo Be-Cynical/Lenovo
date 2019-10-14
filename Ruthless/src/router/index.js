@@ -9,6 +9,7 @@ import StuManagement from '@/components/Teachers/StuManagement.vue'         // �
 import CourseManagement from '@/components/Teachers/CourseManagement.vue'   // 引入教师端课程管理页面
 import MyContribution from '@/components/Teachers/MyContribution.vue'       // 引入教师端我的贡献页面
 import OnlineAnswer from '@/components/Teachers/OnlineAnswer.vue'       // 引入教师端在线解答页面
+import MasterSetting from "@/components/Teachers/MasterSetting.vue"    //引入教师端内容维护页面
 
 
 // -----------------------------------------------------------------------------------------------------------------------
@@ -63,6 +64,11 @@ const routes = [
         path: "OnlineAnswer",     // 教师端在线解答页面
         component: OnlineAnswer,
         name: "OnlineAnswer"
+      },
+      {
+        path: "MasterSetting/:id",     // 教师端内容维护页面
+        component: MasterSetting,
+        name: "MasterSetting"
       }
     ]
   },
