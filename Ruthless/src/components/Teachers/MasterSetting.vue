@@ -1,5 +1,18 @@
 <template>
   <div id="MasterSetting" class="ms-box">
+    <!-- 顶部图片部分 -->
+    <el-row>
+      <el-col :span="24" class="header1">
+        <div class="h-text">
+          <p class="h-t-p1">课程管理</p>
+          <p class="h-t-p2">贴合知识点 课程执行力 课程核心和主要内容</p>
+        </div>
+        <div class="h-img">
+          <img src="../../images/back03.png" alt />
+        </div>
+      </el-col>
+    </el-row>
+    <!-- 标题部分 -->
     <el-row>
       <el-col :span="22" :offset="1" class="ms-top">
         <div class="m-t-box">
@@ -14,8 +27,6 @@
         <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
           v-for="(item,index) in arr"
           :key="index"
           :title="item.name"
@@ -90,62 +101,108 @@
               <el-table-column prop="updateTime" label="最后更新时间"></el-table-column>
               <el-table-column>
                 <template slot-scope="scope">
-                  <el-button @click="handleEdit(scope.$index, scope.row)" type="primary" plain>上传资源</el-button>
+                  <span @click="clickUpload(scope.row.id)">
+                    <el-button type="primary" @click="dialogVisible = true">上传资源</el-button>
+                  </span>
                 </template>
               </el-table-column>
             </el-table>
+          </template>
+          <!-- 点击上传资源获取的课程列表信息dialog -->
+          <template>
+            <el-dialog title="新增课程资源" :visible.sync="dialogVisible" :before-close="handleClose">
+              <el-table :data="resource">
+                <el-table-column property="id" label="序号"></el-table-column>
+                <el-table-column property="typeId" label="文件类型"></el-table-column>
+                <el-table-column property="fileName" label="文件名称"></el-table-column>
+                <el-table-column property="fileAuthor" label="作者"></el-table-column>
+                <el-table-column property="updateTime" label="最后更新时间"></el-table-column>
+                <el-table-column property="userName" label="上传人姓名"></el-table-column>
+                <el-table-column property="opration" label="操作">
+                  <template>
+                    <span>
+                      <el-button type="text">属性</el-button>
+                    </span> |
+                    <span>
+                      <el-button type="text">删除</el-button>
+                    </span> |
+                    <el-button type="text">下载</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <br />
+              <span>资源类型:</span>
+              <el-radio-group
+                @change="resourceType(typeId)"
+                v-model="typeId"
+                v-for="(item, index) in types"
+                :key="index"
+              >
+                <el-radio :label="item.id">{{ item.name }}</el-radio>
+              </el-radio-group>
+              <hr style="height:1px;border:none;border-top:1px solid #F0F0F0;" />
+
+              <div>
+                <span>上传文件：</span>
+                <input type="file" />
+              </div>
+
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogVisible = false">
+                  <span>确 定</span>
+                </el-button>
+              </span>
+            </el-dialog>
           </template>
         </div>
       </el-col>
     </el-row>
   </div>
 </template>
-
 <script>
 export default {
   name: "MasterSetting",
   data: function() {
     return {
-      arr: [], //学期和对应课程列表
-      newResources: "",
-      multipleSelection: [], //多选的选中项push
-      courseResources: [  //课程对应的课程资源
-        {
-          id: "",
-          name: "",
-          createTime: "",
-          updateTime: ""
-        }
-      ],
-      //编辑框
-      showEdit: [],
-      row: "",
-      index: "",
-      showBtn: []
+      arr: [], // 学期和对应课程列表
+      multipleSelection: [], // 多选的选中项push
+      dialogVisible: false, // 上传资源的dialog
+      dialogAttributeVisible: false, // 上传资源中属性的dialog
+      courseResources: [], // 课程对应的课程资源
+      showEdit: [], // 修改编辑课时内容
+      row: "", // 当前课时行的数据
+      index: "", // 当前课时行的下标
+      showBtn: [], // 展示显示编辑 或 图标符号
+      delCurrent: [], // 存放删除课程资源的id
+      insertId: "", // 课时id
+      resource: [], // 资源列表
+      types: [], // 资源类型
+      typeId: 1, // 默认显示资源类型
+      customCourseId: "", // 保存customCourseId：右边table当前行的id
+      file: "", // 存放上传视频的路径url
+      fileImg: "", // 存放上传图片的路径url
+      attributeObj: {}, // 每一行属性对象
+      fileAuthor: "", // 属性的作者
+      shortDescVal: "", // 属性的描述
+      content: "" // 属性的内容
     };
   },
   methods: {
-    //navMenus导航菜单默认事件
-    handleOpen(key, keyPath) {},
-    handleClose(key, keyPath) {},
-
-    //单击某一学期下的某一课程，获取对应的课程资源
+    // 单击某一学期下的某一课程，获取对应的课程资源
     course(itemId) {
+      // console.log(itemId);
+      this.insertId = itemId; // 课程id
       var app = this;
-      console.log(itemId);
       app.$http
         .get(`/product/majorCustomCourse/getListByItemId/${itemId}`)
         .then(function(res) {
-          console.log(res.data);
+          // console.log(res.data);
           app.courseResources = res.data;
         });
     },
-    //内容维护上传资源
-    handleEdit(index, row) {
-      // console.log(index, row);
-    },
 
-    //点击添加课程
+    // 点击添加课程
     addCourse() {
       var list = {
         name: this.name,
@@ -153,16 +210,16 @@ export default {
         updateTime: this.updateTime
       };
       this.courseResources.push(list);
-      console.log(this.courseResources);
+      // console.log(this.courseResources);
     },
 
+    // 保存课程，就是当点击对号按钮符号时触发
     saveCustomCourse(name, id) {
-      //保存课程，就是当点击对号按钮符号时触发
-      console.log(name);
-      console.log(id);
-      console.log(this.$data.courseResources);
-      var itemId = this.$data.courseResources[0].itemId;
-      console.log(itemId);
+      // console.log(name);
+      // console.log(id);
+      // console.log(this);
+      // console.log(this.insertId);//课程id
+      var itemId = this.insertId;
       var app = this;
       this.$http
         .post("/product/majorCustomCourse/save", {
@@ -171,18 +228,30 @@ export default {
           id
         })
         .then(function(res) {
-          // console.log(res.data);
-          if (res.data) {
+          // console.log(res);
+          if (res.data == "") {
             console.log("保存课程资源成功!");
             // alert("课程创建成功，请重新刷新页面！");
+            app.$message.success("课程创建成功!");
+            //再次获取table列表，实现更新
+            var itemId = app.insertId;
+            console.log(itemId);
+            app.$http
+              .get(`/product/majorCustomCourse/getListByItemId/${itemId}`)
+              .then(function(res) {
+                app.courseResources = res.data;
+              });
+          } else {
+            alert("失败的保存");
           }
         });
     },
+
+    // 当为编辑框的时候
     handleEdit(index, row) {
-      //当为编辑框的时候
-      console.log(index); //当前行的下标
-      console.log(row); //当前行的数据
-      console.log(row.id); //当前行的数据 undefined
+      // console.log(index); //当前行的下标
+      // console.log(row); //当前行的数据
+      // console.log(row.id); //当前行的数据 undefined
       this.row = row;
       this.index = index;
       this.showEdit[index] = true; //修改数组
@@ -190,35 +259,86 @@ export default {
       this.showBtn[row.id] = true;
       this.$set(this.showBtn, row.id, true);
     },
+
+    // 当取消选框的时候,就是保存数据的时候
     handelCancel(index, row) {
-      //当取消选框的时候,就是保存数据的时候
-      // console.log(index);//5
-      // console.log(row);//
-      console.log(row.id);
+      // console.log(index);
+      // console.log(row);
+      // console.log(row.id);
       this.showEdit[index] = false;
       this.showBtn[row.id] = false;
       this.saveCustomCourse(row.name, row.id);
     },
 
-    //选中项
+    // 选中项
     handleSelectionChange(val) {
-      console.log(val);
       this.multipleSelection = val; //将选中项保存在multipleSelection数组中
+      // console.log(val);
+      app.multipleSelection = val.map(item => {
+        this.delCurrent.push(item.id);
+      });
     },
-    //删除课程
+
+    // 删除课程
     deleteCourse() {
-      // console.log(this.multipleSelection.id);
+      // console.log(this.delCurrent);//这里删除的是每一条数据的id所组成的数组
       var app = this;
-      for (var i = 0; i < app.multipleSelection.length; i++) {
-        var id = app.multipleSelection[i].id;
-        app.$http
-          .get(`/product/customMaterial/delete/${id}`)
+      if (confirm("确认要删除所选课程吗？")) {
+        this.$http
+          .post("/product/majorCustomCourse/deletes", this.delCurrent)
           .then(function(res) {
-            console.log(res);
+            // console.log(res);
+            if (res.data == true) {
+              app.$message.success("课程删除成功！");
+              //再次获取table列表，实现更新
+              var itemId = app.insertId;
+              app.$http
+                .get(`/product/majorCustomCourse/getListByItemId/${itemId}`)
+                .then(function(res) {
+                  app.courseResources = res.data;
+                });
+            } else {
+              app.$message.error("删除失败");
+            }
           });
       }
+    },
+
+    // 资源类型选中项发生改变时触发
+    resourceType(radio) {
+      console.log(radio);
+    },
+
+    // dialog小×号点击事件
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
+    },
+
+    // 点击上传资源获取课程资源列表信息
+    clickUpload(customCourseId) {
+      // console.log(customCourseId);
+      this.customCourseId = customCourseId; //保存右边table当前行数据id
+      var app = this;
+      //已有资源列表
+      this.$http
+        .get(`/product/customMaterial/getListByCourseId/${customCourseId}`)
+        .then(function(res) {
+          // console.log(res.data);
+          app.resource = res.data;
+          // console.log(app.gridData);
+        });
+      //资源类型
+      this.$http.get("/product/materialType/listForAble").then(function(res) {
+        // console.log(res.data);
+        app.types = res.data;
+      });
     }
   },
+
   created() {
     // 组件加载完成之后的生命回调函数,如果页面一加载就需要显示数据,数据就在此获取
     var customId = this.$route.params.id;
@@ -235,6 +355,29 @@ export default {
 </script>
 
 <style>
+/* 标题部分 */
+.header1 {
+  min-height: 144px;
+  background: linear-gradient(60deg, #f336aa, #f57ed7);
+}
+.h-text {
+  float: left;
+  margin-left: 180px;
+  color: #ffffff;
+}
+.h-t-p1 {
+  font-size: 26px;
+  font-weight: 400;
+}
+.h-t-p2 {
+  font-weight: 300;
+  font-size: 16px;
+}
+.h-img {
+  float: right;
+  margin-right: 77px;
+}
+
 .ms-box {
   background: #eee9e9;
 }
@@ -258,5 +401,11 @@ export default {
 }
 .ms-r-btn {
   margin-bottom: 15px;
+}
+.el-dialog {
+  width: 70%;
+}
+.el-radio__label {
+  margin-right: 15px;
 }
 </style>

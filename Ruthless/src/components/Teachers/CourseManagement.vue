@@ -22,7 +22,7 @@
                   style="width: 200px; text-align: center; height: 460px; line-height: 50px; float: left;"
                 >
                   <!-- 学期 -->
-                  <el-tag closable @close="clickClose(item.id)">{{ item.name }}</el-tag>
+                  <el-tag>{{ item.name }}</el-tag>
                   <!-- 课程 -->
                   <div v-for="(item,index) in item.childList" :key="index">
                     <el-tag closable @close="clickClose(item.id)">{{ item.name }}</el-tag>
@@ -87,7 +87,7 @@ export default {
       id: "",
       arr: [],
       isShow: false,
-      btnText: "课程定制",
+      btnText: "课程定制"
     };
   },
   methods: {
@@ -103,10 +103,10 @@ export default {
       }
     },
     //点击内容维护跳转至页面
-    whbtn(){
-      var app = this;
-      app.$router.push(`/teacher/MasterSetting/${3}`);
-    },
+    whbtn() {
+      var app = this;
+      app.$router.push(`/teacher/MasterSetting/${3}`);
+    },
     // 添加课程
     clickAdd(customId, parentId) {
       this.$http
