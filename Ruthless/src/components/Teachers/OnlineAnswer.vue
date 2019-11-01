@@ -104,11 +104,20 @@
                 </template>
               </el-tab-pane>
             </el-tabs>
+<<<<<<< HEAD
              <el-dialog
               :visible.sync="dialogVisible1"
               width="50%"
               :before-close="handleClose"
               title="回复在线提问"
+=======
+            <!-- 点击已回复问题详情的dialog -->
+            <el-dialog
+              :visible.sync="dialogVisible1"
+              width="50%"
+              :before-close="handleClose"
+              title="已回复问题"
+>>>>>>> Ruthless
             >
               <div>
                 <div>问题：{{recovered.subject}}</div>
@@ -122,6 +131,10 @@
                 <el-button @click="dialogVisible1 = false">取 消</el-button>
               </span>
             </el-dialog>
+<<<<<<< HEAD
+=======
+            <!-- 点击问题回复的dialog -->
+>>>>>>> Ruthless
             <el-dialog
               :visible.sync="dialogVisible"
               width="50%"
@@ -282,6 +295,7 @@ export default {
       dialogVisible2: false,
       dialogVisible3: false,
       activeName: "second",
+<<<<<<< HEAD
       //未解答问题：
       problemN: [], //未解答问题
       currentPage: 1, //默认显示第一条
@@ -297,27 +311,59 @@ export default {
       page: 1,
       pageSize: 8,
       recovered: {},  //当前问题详情
+=======
+      arr: [], // 所有问题，包括已解答和未解答
+      // 未解答问题：
+      problemN: [], // 未解答问题
+      currentPage: 1, // 默认显示第一条
+      PageSizeTable: 4, // 默认每页显示的条数（可修改）
+      // 已解答问题：
+      problemY: [], // 已解答问题
+      currentPageY: 1, // 默认显示第一条
+      PageSizeTableY: 4, // 默认每页显示的条数（可修改）
+      // 意见反馈：
+      opinion: [], // 所有意见
+      opinionCurrentPage: 1, // 默认显示第一条
+      opinionPageSize: 4, // 默认每页显示的条数（可修改）
+      page: 1,
+      pageSize: 999,
+      recovered: {}, // 当前问题详情
+>>>>>>> Ruthless
       textarea: "",
       details: {}
     };
   },
   methods: {
     // 分页
+<<<<<<< HEAD
     //未回复问题分页
+=======
+    // 未回复问题分页
+>>>>>>> Ruthless
     handleSizeChange(val) {
       this.PageSizeTable = val; // 每页显示的条数
     },
     handleCurrentChange(val) {
+<<<<<<< HEAD
       this.currentPage = val; //显示第几页
     },
     //已回复问题分页
+=======
+      this.currentPage = val; // 显示第几页
+    },
+    // 已回复问题分页
+>>>>>>> Ruthless
     handleSizeChangeY(val) {
       this.PageSizeTableY = val;
     },
     handleCurrentChangeY(val) {
       this.currentPageY = val;
     },
+<<<<<<< HEAD
     //问题反馈分页
+=======
+    // 问题反馈分页
+>>>>>>> Ruthless
     opinionSizeChange(val) {
       this.opinionPageSize = val;
     },
@@ -333,6 +379,51 @@ export default {
         })
         .catch(_ => {});
     },
+<<<<<<< HEAD
+=======
+
+    // 获取问题库列表
+    getNewList() {
+      var app = this;
+      // 获取问题库
+      app.$http
+        .post("/business/studentQuestion/page", {
+          page: this.page,
+          pageSize: this.pageSize
+        })
+        .then(function(res) {
+          console.log(res);
+          app.arr = res.data.data;
+          console.log(app.arr);
+          var newArr = app.arr;
+          for (var i = 0; i < newArr.length; i++) {
+            if (newArr[i].explanation == null) {
+              app.problemN.push(newArr[i]);
+            } else {
+              newArr[i].isSolution == "Y";
+              app.problemY.push(newArr[i]);
+            }
+          }
+        });
+      console.log(app.problemY);
+      console.log(app.problemN);
+    },
+
+    // 获取意见反馈列表
+    getOpinionList() {
+      var app = this;
+      this.$http
+        .post("/business/opinionsSuggestions/pageAll", {
+          page: this.page,
+          pageSize: this.pageSize
+        })
+        .then(function(res) {
+          // console.log(res.data);
+          app.opinion = res.data.data;
+        });
+    },
+
+>>>>>>> Ruthless
     // 意见反馈回复
     handleClick(tab, event) {
       // console.log(tab, event);
@@ -348,9 +439,16 @@ export default {
           app.recovered = res.data;
         });
     },
+<<<<<<< HEAD
     // 问题库 提交回复
     submitAnswer(id, explanation) {
       console.log(explanation)
+=======
+
+    // 问题库 提交回复
+    submitAnswer(id, explanation) {
+      console.log(explanation);
+>>>>>>> Ruthless
       var app = this;
       this.$http
         .post("/business/studentQuestion/explainQuestion", {
@@ -358,10 +456,15 @@ export default {
           explanation
         })
         .then(function(res) {
+<<<<<<< HEAD
           console.log(res)
+=======
+          console.log(res);
+>>>>>>> Ruthless
           if (res.data == "") {
             app.textarea = "";
-            console.log("提交成功");
+            app.$message.success("提交回复成功");
+            app.getNewList();
           }
         });
     },
@@ -376,6 +479,10 @@ export default {
           app.details = res.data;
         });
     },
+<<<<<<< HEAD
+=======
+
+>>>>>>> Ruthless
     // 意见反馈 提交处理
     submitDetails(id, handleResult) {
       var app = this;
@@ -388,13 +495,15 @@ export default {
           // console.log(res.data);
           if (res.data == "") {
             app.textarea = "";
-            console.log("提交成功");
+            app.$message.success("提交成功");
+            app.getOpinionList(); //重新调用获取意见反馈列表
           }
         });
     }
   },
   created() {
     // 组件加载完成之后的生命回调函数,如果页面一加载就需要显示数据,数据就在此获取
+<<<<<<< HEAD
     var app = this;
     // 获取问题库
     app.$http
@@ -423,6 +532,10 @@ export default {
       .then(function(res) {
         app.opinion = res.data.data;
       });
+=======
+    this.getNewList(); // 调用获取消息列表函数
+    this.getOpinionList(); // 调用获取意见反馈列表函数
+>>>>>>> Ruthless
   }
 };
 </script>

@@ -22,7 +22,7 @@
         <el-input v-model="typeName" placeholder="java,html,sql" style="width: 390px;"></el-input>
         <span>* 用逗号分开，不超过五个，且每个标签长度不超过九个字符</span>
         <p>当前标签</p>
-        <button type="button" @click="clickAsk">提交问题</button>
+        <button type="button" @click="clickAsk()">提交问题</button>
       </div>
     </div>
   </div>
@@ -42,12 +42,21 @@ export default {
     //当前组件用到的函数
     clickAsk: function() {
       // console.log(this.question);
+      // console.log(this.typeName);
+      // console.log(this.subject);
+      var app = this;
       this.$http.post('/business/studentQuestion/submitQuestion', {
         typeName: this.typeName,
         subject: this.subject,
         question: this.question
       }).then(function(res) {
         console.log(res);
+        if(res.data == "") {
+          app.typeName = "";
+          app.subject = "";
+          app.question = "";
+          alert("问题已提交~");
+        }
       })
     }
   },
@@ -95,7 +104,7 @@ export default {
 }
 .search {
   margin-top: 20px;
-  margin-left: 440px;
+  margin-left: 450px;
 }
 .search button {
   width: 120px;
@@ -116,7 +125,7 @@ export default {
 .content .ask_bg {
   width: 55%;
   height: 558px;
-  margin-left: 400px;
+  margin-left: 450px;
   /* background: #ccc; */
   /* border: 1px solid #000; */
 }

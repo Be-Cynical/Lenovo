@@ -109,24 +109,58 @@ export default {
     },
     // 添加课程
     clickAdd(customId, parentId) {
+<<<<<<< HEAD
       this.$http
+=======
+      var app = this;
+      app.$http
+>>>>>>> Ruthless
         .post("/product/majorCustomItem/insert", {
           customId: customId,
           parentId: parentId,
           name: this.name
         })
         .then(function(res) {
+<<<<<<< HEAD
           console.log(res);
+=======
+          app.$message.success("课程添加成功！");
+          console.log(res);
+          app.$http
+            .get("/product/majorType/listContainCustomList")
+            .then(function(res) {
+              app.arr = res.data;
+              app.name = "";
+            });
+>>>>>>> Ruthless
         });
     },
     // 删除课程
     clickClose(id) {
       console.log(id);
+<<<<<<< HEAD
       this.$http
         .get(`/product/majorCustomItem/delete/${id}`)
         .then(function(res) {
           console.log(res.data);
         });
+=======
+      if (confirm("确认要删除此课程吗？")) {
+        var app = this;
+        app.$http
+          .get(`/product/majorCustomItem/delete/${id}`)
+          .then(function(res) {
+            app.$message.success("课程删除成功！");
+            console.log(res.data);
+            app.$http
+              .get("/product/majorType/listContainCustomList")
+              .then(function(res) {
+                console.log(res.data);
+                app.arr = res.data;
+              });
+          });
+      }
+>>>>>>> Ruthless
     }
   },
   created() {
@@ -135,7 +169,10 @@ export default {
     this.$http
       .get("/product/majorType/listContainCustomList")
       .then(function(res) {
+<<<<<<< HEAD
         console.log(res.data);
+=======
+>>>>>>> Ruthless
         app.arr = res.data;
       });
   }

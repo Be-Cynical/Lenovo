@@ -25,7 +25,10 @@
       <!-- 左侧课程导航列表 -->
       <el-col :span="5" :offset="1" style="background:#fff;">
         <el-menu
+<<<<<<< HEAD
           default-active="2"
+=======
+>>>>>>> Ruthless
           class="el-menu-vertical-demo"
           v-for="(item,index) in arr"
           :key="index"
@@ -40,11 +43,19 @@
             <!-- 课程 -->
             <el-menu-item-group>
               <el-menu-item
+<<<<<<< HEAD
                 index="'1-'+index"
                 v-for="(item,index) in item.childList"
                 :key="index"
                 :title="item.name"
                 @click="course(item.id)"
+=======
+                :index="'1-'+index"
+                v-for="(item,index) in item.childList"
+                :key="index"
+                :title="item.name"
+                @click="CourseDetails(item.id)"
+>>>>>>> Ruthless
               >{{item.name}}</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -55,8 +66,13 @@
       <el-col :span="17">
         <div class="ms-right">
           <div class="ms-r-btn">
+<<<<<<< HEAD
             <el-button @click="addCourse()" type="primary" plain>添加课程</el-button>
             <el-button @click="deleteCourse()" type="primary" plain>删除课程</el-button>
+=======
+            <el-button @click="addCourse()" type="primary" plain>添加课时</el-button>
+            <el-button @click="deleteCourse()" type="primary" plain>删除课时</el-button>
+>>>>>>> Ruthless
           </div>
           <template>
             <el-table
@@ -97,8 +113,13 @@
                   </div>
                 </template>
               </el-table-column>
+<<<<<<< HEAD
               <el-table-column prop="createTime" label="创建时间"></el-table-column>
               <el-table-column prop="updateTime" label="最后更新时间"></el-table-column>
+=======
+              <el-table-column prop="createTime" label="创建时间" :formatter="dateFormat"></el-table-column>
+              <el-table-column prop="updateTime" label="最后更新时间" :formatter="dateFormat"></el-table-column>
+>>>>>>> Ruthless
               <el-table-column>
                 <template slot-scope="scope">
                   <span @click="clickUpload(scope.row.id)">
@@ -116,6 +137,7 @@
                 <el-table-column property="typeId" label="文件类型"></el-table-column>
                 <el-table-column property="fileName" label="文件名称"></el-table-column>
                 <el-table-column property="fileAuthor" label="作者"></el-table-column>
+<<<<<<< HEAD
                 <el-table-column property="updateTime" label="最后更新时间"></el-table-column>
                 <el-table-column property="userName" label="上传人姓名"></el-table-column>
                 <el-table-column property="opration" label="操作">
@@ -127,6 +149,19 @@
                       <el-button type="text">删除</el-button>
                     </span> |
                     <el-button type="text">下载</el-button>
+=======
+                <el-table-column property="updateTime" label="最后更新时间" :formatter="dateFormat"></el-table-column>
+                <el-table-column property="userName" label="上传人姓名"></el-table-column>
+                <el-table-column property="opration" label="操作">
+                  <template slot-scope="scope">
+                    <span @click="attributeHandle(scope.row)">
+                      <el-button type="text" @click="dialogAttributeVisible = true">属性</el-button>
+                    </span> |
+                    <span>
+                      <el-button type="text" @click="deleteAttribute(scope.row.id)">删除</el-button>
+                    </span> |
+                    <el-button type="text" @click="downloadAttribute(scope.row.id)">下载</el-button>
+>>>>>>> Ruthless
                   </template>
                 </el-table-column>
               </el-table>
@@ -144,13 +179,67 @@
 
               <div>
                 <span>上传文件：</span>
+<<<<<<< HEAD
                 <input type="file" />
+=======
+                <input type="file" @change="fileUpload($event)" />
+                <el-button size="mini" type="primary" @click="resourceSubmit">提 交</el-button>
+>>>>>>> Ruthless
               </div>
 
               <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">取 消</el-button>
+<<<<<<< HEAD
                 <el-button type="primary" @click="dialogVisible = false">
                   <span>确 定</span>
+=======
+                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+              </span>
+            </el-dialog>
+          </template>
+          <!-- 上传资源中的每条属性dialog -->
+          <template>
+            <el-dialog title="编辑属性" :visible.sync="dialogAttributeVisible" width="30%">
+              <div>
+                作者：
+                <input
+                  type="text"
+                  style="width:100%"
+                  :placeholder="attributeObj.fileAuthor"
+                  v-model="fileAuthor"
+                />
+              </div>
+              <div style="margin-top:20px">
+                描述：
+                <textarea
+                  name
+                  id
+                  cols="55"
+                  rows="8"
+                  :placeholder="attributeObj.shortDescribe"
+                  v-model="shortDescVal"
+                ></textarea>
+              </div>
+              <div style="margin-top:20px">
+                内容：
+                <textarea
+                  name
+                  id
+                  cols="55"
+                  rows="8"
+                  :placeholder="attributeObj.content"
+                  v-model="content"
+                ></textarea>
+              </div>
+              <div style="margin-top:20px">
+                上传图片：
+                <input type="file" @change="fileImgUpload($event)" />
+              </div>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogAttributeVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogAttributeVisible = false">
+                  <span @click="attributeUpdate">更 新</span>
+>>>>>>> Ruthless
                 </el-button>
               </span>
             </el-dialog>
@@ -190,8 +279,13 @@ export default {
   },
   methods: {
     // 单击某一学期下的某一课程，获取对应的课程资源
+<<<<<<< HEAD
     course(itemId) {
       // console.log(itemId);
+=======
+    CourseDetails(itemId) {
+      console.log(itemId);
+>>>>>>> Ruthless
       this.insertId = itemId; // 课程id
       var app = this;
       app.$http
@@ -230,6 +324,7 @@ export default {
         .then(function(res) {
           // console.log(res);
           if (res.data == "") {
+<<<<<<< HEAD
             console.log("保存课程资源成功!");
             // alert("课程创建成功，请重新刷新页面！");
             app.$message.success("课程创建成功!");
@@ -243,6 +338,15 @@ export default {
               });
           } else {
             alert("失败的保存");
+=======
+            // console.log("保存课时资源成功!");
+            // alert("课程创建成功，请重新刷新页面！");
+            app.$message.success("课时创建成功!");
+            //再次获取table列表，实现更新
+            app.CourseDetails(app.insertId);
+          } else {
+            alert("课时创建失败");
+>>>>>>> Ruthless
           }
         });
     },
@@ -260,6 +364,7 @@ export default {
       this.$set(this.showBtn, row.id, true);
     },
 
+<<<<<<< HEAD
     // 当取消选框的时候,就是保存数据的时候
     handelCancel(index, row) {
       // console.log(index);
@@ -270,6 +375,8 @@ export default {
       this.saveCustomCourse(row.name, row.id);
     },
 
+=======
+>>>>>>> Ruthless
     // 选中项
     handleSelectionChange(val) {
       this.multipleSelection = val; //将选中项保存在multipleSelection数组中
@@ -283,12 +390,17 @@ export default {
     deleteCourse() {
       // console.log(this.delCurrent);//这里删除的是每一条数据的id所组成的数组
       var app = this;
+<<<<<<< HEAD
       if (confirm("确认要删除所选课程吗？")) {
+=======
+      if (confirm("确认要删除所选课时吗？")) {
+>>>>>>> Ruthless
         this.$http
           .post("/product/majorCustomCourse/deletes", this.delCurrent)
           .then(function(res) {
             // console.log(res);
             if (res.data == true) {
+<<<<<<< HEAD
               app.$message.success("课程删除成功！");
               //再次获取table列表，实现更新
               var itemId = app.insertId;
@@ -299,6 +411,13 @@ export default {
                 });
             } else {
               app.$message.error("删除失败");
+=======
+              app.$message.success("课时删除成功！");
+              //再次获取table列表，实现更新
+              app.CourseDetails(app.insertId);
+            } else {
+              app.$message.error("课时删除失败");
+>>>>>>> Ruthless
             }
           });
       }
@@ -336,12 +455,186 @@ export default {
         // console.log(res.data);
         app.types = res.data;
       });
+<<<<<<< HEAD
+=======
+    },
+
+    // 上传文件的选择文件
+    fileUpload(event) {
+      //上传文件的选择文件
+      console.log(event);
+      console.log(event.target.files[0]);
+      this.file = event.target.files[0];
+    },
+
+    // 资源提交
+    resourceSubmit() {
+      // console.log(this.customCourseId); // 当前行的id
+      // console.log(this.typeId);
+      // console.log(this.file);
+      var app = this;
+      // 对上传的文件进行包装
+      var FormData = new window.FormData(); // 创建一个文件对象
+      let config = { headers: { "Content-Type": "multipart/form-data" } };
+      FormData.append("file", this.file);
+      this.$http
+        .post(
+          `/product/customMaterial/uploadFile?customCourseId=${this.customCourseId}&typeId=${this.typeId}`,
+          FormData,
+          config
+        )
+        .then(function(res) {
+          console.log(res.data);
+          if (res.data == "") {
+            app.$message.success("成功添加一条！");
+            // app.uploadResources();//再次调用上传资源函数，重新加载数据
+            // this.$options.methods.函数名字();
+            var customCourseId = app.customCourseId;
+            app.$http
+              .get(
+                `/product/customMaterial/getListByCourseId/${customCourseId}`
+              )
+              .then(function(res) {
+                // console.log(res.data);
+                app.resource = res.data;
+                // console.log(app.gridData);
+              });
+          } else {
+            alert("添加失败");
+          }
+        });
+    },
+
+    // 上传的图片选择
+    fileImgUpload(e) {
+      console.log(e);
+      this.fileImg = event.target.files[0];
+    },
+
+    // 点击每条资源的属性
+    attributeHandle(row) {
+      var app = this;
+      console.log(row);
+      this.attributeObj = row;
+      console.log(this.attributeObj);
+    },
+
+    // 提交写入的属性数据
+    attributeUpdate() {
+      var app = this;
+      var detailId = this.attributeObj.id;
+      // console.log(detailId);
+      // console.log(this.fileAuthor);
+      // console.log(this.shortDescVal);
+      // console.log(this.content);
+      var FormData = new window.FormData();
+      let config = { headers: { "Content-Type": "multipart/form-data" } };
+      FormData.append("file", this.fileImg);
+      this.$http
+        .post(
+          `/product/customMaterial/update?id=${detailId}&fileAuthor=${this.fileAuthor}&shortDescribe=${this.shortDescVal}&content=${this.content}`,
+          FormData,
+          config
+        )
+        .then(function(res) {
+          // console.log(res);
+          // console.log(res.data);
+          if (res.data == "") {
+            app.$message.success("更新成功！");
+            app.fileAuthor = "";
+            app.shortDescVal = "";
+            app.content = "";
+            // app.uploadResources();//再次调用上传资源函数，重新加载数据 报错未修改
+            // app.$options.methods.uploadResources();
+            var customCourseId = app.customCourseId;
+            app.$http
+              .get(
+                `/product/customMaterial/getListByCourseId/${customCourseId}`
+              )
+              .then(function(res) {
+                // console.log(res.data);
+                app.resource = res.data;
+                // console.log(app.gridData);
+              });
+          } else {
+            app.$message.error("更新失败!");
+          }
+        });
+    },
+
+    // 删除新增课程资源中的当前条
+    deleteAttribute(id) {
+      // console.log(id);
+      var app = this;
+      if (confirm("确认要删除此条数据吗？")) {
+        this.$http
+          .get(`/product/customMaterial/delete/${id}`)
+          .then(function(res) {
+            // console.log(res.data);
+            if (res.data == "") {
+              app.$message.success("删除成功");
+              // app.$options.methods.uploadResources();
+              var customCourseId = app.customCourseId;
+              app.$http
+                .get(
+                  `/product/customMaterial/getListByCourseId/${customCourseId}`
+                )
+                .then(function(res) {
+                  // console.log(res.data);
+                  app.resource = res.data;
+                  // console.log(app.gridData);
+                });
+            } else {
+              app.$message.error("删除失败");
+            }
+          });
+      }
+    },
+
+    // 下载新增课程资源中的当前条
+    downloadAttribute(id) {
+      var app = this;
+      this.$http
+        .get(`/product/customMaterial/downLoadFile/${id}`)
+        .then(function(res) {
+          console.log(res);
+          // console.log(res.data);
+          if (res.data == "") {
+            app.$message.success("下载成功");
+          } else {
+            app.$message.error("下载失败");
+          }
+        });
+    },
+
+    // 点击每条资源的属性
+    attributeHandle(row) {
+      var app = this;
+      // console.log(row);
+      this.attributeObj = row;
+      // console.log(this.attributeObj);
+    },
+
+    //时间格式处理
+    dateFormat: function(row, column) {
+      // console.log(row);
+      // console.log(column);
+      var date = row[column.property]; // console.log(date)
+      if (date == undefined) {
+        return "";
+      }
+      return this.$moment(date).format("YYYY-MM-DD HH:MM:SS");
+>>>>>>> Ruthless
     }
   },
 
   created() {
     // 组件加载完成之后的生命回调函数,如果页面一加载就需要显示数据,数据就在此获取
     var customId = this.$route.params.id;
+<<<<<<< HEAD
+=======
+    // console.log(customId);
+>>>>>>> Ruthless
     var app = this;
     // 获取学期和对应课程列表
     app.$http
@@ -350,6 +643,10 @@ export default {
         // console.log(res.data);
         app.arr = res.data;
       });
+<<<<<<< HEAD
+=======
+    app.CourseDetails(248);
+>>>>>>> Ruthless
   }
 };
 </script>
@@ -403,7 +700,11 @@ export default {
   margin-bottom: 15px;
 }
 .el-dialog {
+<<<<<<< HEAD
   width: 70%;
+=======
+  width: 75%;
+>>>>>>> Ruthless
 }
 .el-radio__label {
   margin-right: 15px;
